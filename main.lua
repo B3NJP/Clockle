@@ -79,7 +79,7 @@ function love.load()
 	Ship = 1
 	ShipName = "Laser"
 	ShipSpecial = "Laser"
-	Ships = 2
+	Ships = 3
 	ForceSpeedDefault = 1
 	ForceReset = 20
 	Godmode = false
@@ -475,6 +475,12 @@ function ShipChoice()
 		ShipSpecial = "Forcefield"
 		SpecialTimerMax = 15
 	end
+	if Ship == 3 then
+		player.img = love.graphics.newImage('assets/StealthShip.png')
+		ShipName = "Stealth"
+		ShipSpecial = "Teleport"
+		SpecialTimerMax = 15
+	end
 end
 
 function GoTimer(dt)
@@ -661,6 +667,12 @@ function Shooting()
 		shieldx = player.x + player.img:getWidth()/2 - ForcefieldIcon:getWidth()/2
 		shieldy = player.y + player.img:getHeight()/2 - ForcefieldIcon:getHeight()/2
 		ForcefieldY = true
+		SpecialShoot = false
+		SpecialTimer = SpecialTimerMax
+	end
+
+	if love.keyboard.isDown('v') and SpecialShoot and Alive and Ship == 3 then
+		player.x = love.mouse.getX()
 		SpecialShoot = false
 		SpecialTimer = SpecialTimerMax
 	end
