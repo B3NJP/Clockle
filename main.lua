@@ -71,7 +71,7 @@ function love.load()
 	love.audio.play(Music)
 	Title = love.graphics.newImage("assets/Title.png")
 	CleanerImg = love.graphics.newImage("assets/Cleaner.png")
-	CleanerHealth = 30
+	CleanerHealth = 20
 	CleanerSpeed = EnemySpeed / 4
 	Nm = 1
 	IfBoss = true
@@ -698,6 +698,7 @@ function BulletTime(multiplier)
 		SpecialEnemyShoot = 1
 		OverheatSpeed = OverheatSpeedDefault
 		SpecialSpeedX = 20
+		CleanerSpeed = EnemySpeed / 4
 	else
 		MakeEnemySpeed = 2 * multiplier
 		EnemySpeed = 120 * multiplier
@@ -709,6 +710,7 @@ function BulletTime(multiplier)
 		SpecialEnemyShoot = 1 * multiplier
 		OverheatSpeed = OverheatSpeedDefault * multiplier
 		SpecialSpeedX = 20 * multiplier
+		CleanerSpeed = EnemySpeed / 4
 	end
 end
 
