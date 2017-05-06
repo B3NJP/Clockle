@@ -479,7 +479,7 @@ function ShipChoice()
 		player.img = love.graphics.newImage('assets/StealthShip.png')
 		ShipName = "Stealth"
 		ShipSpecial = "Teleport"
-		SpecialTimerMax = 15
+		SpecialTimerMax = 5
 	end
 end
 
