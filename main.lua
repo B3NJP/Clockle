@@ -560,7 +560,7 @@ end
 
 function Starting()
 	if not Alive and Start and love.keyboard.isDown('r') and not res then
-		if Score > highscore then
+		if Score > tonumber(highscore) then
 			highscore = Score
 			love.filesystem.write('highscore.txt', highscore)
 		end
