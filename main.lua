@@ -1,5 +1,4 @@
 player = {}
-highscore = {}
 bullets = {}
 lasers = {}
 enemies = {}
@@ -19,8 +18,8 @@ end
 
 
 function love.load()
-	highscore.file = io.open("Highscore", "r")
-	if highscore.file:read() == "" then highscore.num = 0 else highscore.num = highscore.file:read() end
+	highscore = love.filesystem.read("highscore.txt")
+	if highscore == "" then highscore = 0 end
     player.img = love.graphics.newImage('assets/LaserShip.png')
     player.x = love.graphics.getWidth() / 2
 	player.y = love.graphics.getHeight() - 50
@@ -411,7 +410,7 @@ function love.draw()
     	love.graphics.draw(player.img, player.x, player.y, 0, 1, 1, 0, 0)
     	love.graphics.setColor(0, 0, 0)
     	love.graphics.print("Score: "..Score, love.graphics.getWidth() - 100, 10)
-    	love.graphics.print("Highscore: "..Highscore.num, love.graphics.getWidth() - 100, 25)
+    	love.graphics.print("Highscore: "..highscore, love.graphics.getWidth() - 100, 25)
     	if SpecialShoot then
 			love.graphics.print(ShipSpecial.." is ready!", 10, 10)
 		else
@@ -438,7 +437,7 @@ function love.draw()
 	else
 		love.graphics.setColor(0, 0, 0)
 		if Start then
-			love.graphics.print("You died. Press 'R' to restart. Your score was: "..Score..", Your highscore was: "..highscore.num, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
+			love.graphics.print("You died. Press 'R' to restart. Your score was: "..Score..", Your highscore was: "..highscore, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
 			love.graphics.print("Press 'C' to copy to clipboard", love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
 			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+20)
 			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+35)
@@ -558,11 +557,9 @@ end
 
 function Starting()
 	if not Alive and Start and love.keyboard.isDown('r') and not res then
-		if Score > highscore.num then
-			highscore.num = Score
-			highscore.file:close()
-			highscore.file = io.open("Highscore", "w+")
-			highscore.file:write(highscore.num)
+		if Score > highscore then
+			highscore = Score
+			love.filesystem.write('highscore.txt', highscore)
 		end
 		bullets = {}
 		enemies = {}
