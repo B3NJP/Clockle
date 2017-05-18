@@ -18,6 +18,8 @@ end
 
 
 function love.load()
+	newh = true
+	newhi = 0
 	love.filesystem.setIdentity("Clockle")
 	highscore = love.filesystem.read("highscore.txt")
 	if highscore == nil then highscore = 0 end
@@ -113,6 +115,7 @@ function love.update(dt)
 		Movement(dt)
 		Shooting()
 		CopyClipboard()
+		ResetHighscore()
 		BulletTime(0.1)
 		
 		-----------------------------------------------------------------------------------------------------------------
@@ -435,19 +438,30 @@ function love.draw()
 		end
 		love.graphics.setColor(Overheat * 10, 0, 0)
 		love.graphics.rectangle('fill', 10, 50, Overheat * 10, 20)
+		newh = true
 	else
 		love.graphics.setColor(0, 0, 0)
+		if newh then
+			newhi = highscore
+			if Score > tonumber(highscore) then
+				highscore = Score
+				love.filesystem.write('highscore.txt', highscore)
+			end
+			newh = false
+		end
 		if Start then
 			love.graphics.print("You died. Press 'R' to restart. Your score was: "..Score, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
-			love.graphics.print("Your highscore was: "..highscore, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
+			love.graphics.print("Your highscore was: "..newhi, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
 			love.graphics.print("Press 'C' to copy to clipboard", love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+20)
 			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+35)
 			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+50)
+			love.graphics.print("Press 'E' to reset highscore", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+65)
 		else
 			love.graphics.print("Press 'Space' to start", love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
-			love.graphics.print("Your highscore is: "..highscore, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
+			love.graphics.print("Your highscore is: "..newhi, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
 			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+20)
 			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+35)
+			love.graphics.print("Press 'E' to reset highscore", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+50)
 		end
 	end
 end
@@ -560,10 +574,6 @@ end
 
 function Starting()
 	if not Alive and Start and love.keyboard.isDown('r') and not res then
-		if Score > tonumber(highscore) then
-			highscore = Score
-			love.filesystem.write('highscore.txt', highscore)
-		end
 		bullets = {}
 		enemies = {}
 		lasers = {}
@@ -692,6 +702,15 @@ function CopyClipboard()
 	if not Alive and Start then
 		if love.keyboard.isDown('c') then
 			love.system.setClipboardText(Score)
+		end
+	end
+end
+
+function ResetHighscore()
+	if not Alive then
+		if love.keyboard.isDown('e') then
+			highscore = 0
+			love.filesystem.write('highscore.txt', highscore)
 		end
 	end
 end
