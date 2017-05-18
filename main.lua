@@ -69,7 +69,7 @@ function love.load()
 	Changed = false
 	Music = love.audio.newSource("assets/Music.mp3")
 	Icon = love.graphics.newImage("assets/Icon.png")
-	Go = 5
+	Go = 1.7
 	PewPew:setVolume(0.5)
 	Music:setLooping(true)
 	Music:setVolume(0.1)
