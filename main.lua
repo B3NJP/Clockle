@@ -18,8 +18,9 @@ end
 
 
 function love.load()
+	love.filesystem.setIdentity("Clockle")
 	highscore = love.filesystem.read("highscore.txt")
-	if highscore == "" then highscore = 0 end
+	if highscore == nil then highscore = 0 end
     player.img = love.graphics.newImage('assets/LaserShip.png')
     player.x = love.graphics.getWidth() / 2
 	player.y = love.graphics.getHeight() - 50
@@ -437,14 +438,16 @@ function love.draw()
 	else
 		love.graphics.setColor(0, 0, 0)
 		if Start then
-			love.graphics.print("You died. Press 'R' to restart. Your score was: "..Score..", Your highscore was: "..highscore, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
-			love.graphics.print("Press 'C' to copy to clipboard", love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
-			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+20)
-			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+35)
+			love.graphics.print("You died. Press 'R' to restart. Your score was: "..Score, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
+			love.graphics.print("Your highscore was: "..highscore, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
+			love.graphics.print("Press 'C' to copy to clipboard", love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+20)
+			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+35)
+			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+50)
 		else
 			love.graphics.print("Press 'Space' to start", love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
-			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
-			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+20)
+			love.graphics.print("Your highscore is: "..highscore, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
+			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+20)
+			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+35)
 		end
 	end
 end
