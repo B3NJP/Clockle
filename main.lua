@@ -456,12 +456,14 @@ function love.draw()
 			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+35)
 			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+50)
 			love.graphics.print("Press 'E' to reset highscore", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+65)
+			love.graphics.print("Press 'Q' to quit", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+80)
 		else
 			love.graphics.print("Press 'Space' to start", love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
 			love.graphics.print("Your highscore is: "..newhi, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
 			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+20)
 			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+35)
 			love.graphics.print("Press 'E' to reset highscore", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+50)
+			love.graphics.print("Press 'Q' to quit", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+65)
 		end
 	end
 end
@@ -542,6 +544,10 @@ function Buttons()
 		else
 			Ship = 1
 		end
+	end
+
+	if love.keyboard.isDown('q') and not Alive then
+		love.event.quit()
 	end
 
 	if love.keyboard.isDown('m') and not Alive and not Changed then
