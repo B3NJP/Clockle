@@ -18,6 +18,7 @@ end
 
 
 function love.load()
+	credits = false
 	newh = true
 	newhi = 0
 	love.filesystem.setIdentity("Clockle")
@@ -449,7 +450,7 @@ function love.draw()
 			end
 			newh = false
 		end
-		if Start then
+		if Start and not credits then
 			love.graphics.print("You died. Press 'R' to restart. Your score was: "..Score, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
 			love.graphics.print("Your highscore was: "..newhi, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
 			love.graphics.print("Press 'C' to copy to clipboard", love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+20)
@@ -457,13 +458,18 @@ function love.draw()
 			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+50)
 			love.graphics.print("Press 'E' to reset highscore", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+65)
 			love.graphics.print("Press 'Q' to quit", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+80)
-		else
+			love.graphics.print("Press 'X' to see credits", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+95)
+		elseif not credits then
 			love.graphics.print("Press 'Space' to start", love.graphics:getWidth()/2-65, love.graphics:getHeight()/2-10)
 			love.graphics.print("Your highscore is: "..newhi, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+5)
 			love.graphics.print("Press 'T' for toggle: "..Mode, love.graphics:getWidth()/2-65, love.graphics:getHeight()/2+20)
 			love.graphics.print("Press 'S' to change ship: "..ShipName, love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+35)
 			love.graphics.print("Press 'E' to reset highscore", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+50)
 			love.graphics.print("Press 'Q' to quit", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+65)
+			love.graphics.print("Press 'X' to see credits", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+80)
+		elseif credits then
+			love.graphics.print("Press 'esc' to go back to the menu", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2-10)
+			love.graphics.print("This game is made by Ben Pearcy, a year 8 student\n wondering how he should use his spare time", love.graphics.getWidth()/2-65, love.graphics:getHeight()/2+5)
 		end
 	end
 end
@@ -565,6 +571,14 @@ function Buttons()
 
 	if not Alive then
 		bullets = {}
+	end
+
+	if love.keyboard.isDown('x') and not Alive then 
+		credits = true
+	end
+
+	if love.keyboard.isDown('escape') and credits then
+		credits = false
 	end
 
 	if love.keyboard.isDown('p') then
