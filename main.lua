@@ -210,19 +210,19 @@ function love.update(dt)
 		end
 
 		for i, cleaner in ipairs(cleaners) do
-			if Collision(cleaner.x, cleaner.y, cleaner.img:getWidth(), cleaner.img:getHeight(), player.x, player.y, player.img:getWidth(), player.img:getHeight()) and Godmode == false then
+			if Collision(cleaner.x, cleaner.y, love.graphics.getWidth(), cleaner.img:getHeight(), player.x, player.y, player.img:getWidth(), player.img:getHeight()) and Godmode == false then
 				Alive = false
 				love.audio.play(Death)
 			end
 			for l, bullet in ipairs(bullets) do
-				if Collision(cleaner.x, cleaner.y, cleaner.img:getWidth(), cleaner.img:getHeight(), bullet.x, bullet.y, bullet.img:getWidth(), bullet.img:getHeight()) then
+				if Collision(cleaner.x, cleaner.y, love.graphics.getWidth(), cleaner.img:getHeight(), bullet.x, bullet.y, bullet.img:getWidth(), bullet.img:getHeight()) then
 					cleaner.health = cleaner.health - 1
 					table.remove(bullets, l)
 					love.audio.play(Hit)
 				end
 			end
 			for j, laser in ipairs(lasers) do
-				if Collision(cleaner.x, cleaner.y, cleaner.img:getWidth(), cleaner.img:getHeight(), laser.x, laser.y, laser.img:getWidth(), laser.img:getHeight()) then
+				if Collision(cleaner.x, cleaner.y, love.graphics.getWidth(), cleaner.img:getHeight(), laser.x, laser.y, laser.img:getWidth(), laser.img:getHeight()) then
 					cleaner.health = cleaner.health - 10
 					table.remove(lasers, j)
 					love.audio.play(Hit)
@@ -387,7 +387,9 @@ function love.draw()
 	end
 
 	for i, cleaner in ipairs(cleaners) do
-		love.graphics.draw(cleaner.img, cleaner.x, cleaner.y, 0, 1, 1)
+		for i=1, math.ceil(love.graphics.getWidth()/580) do
+			love.graphics.draw(cleaner.img, cleaner.x*i, cleaner.y, 0, 1, 1)
+		end
 	end
 
 	if ForcefieldY then
