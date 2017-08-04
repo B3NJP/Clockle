@@ -387,8 +387,8 @@ function love.draw()
 	end
 
 	for i, cleaner in ipairs(cleaners) do
-		for i=1, math.ceil(love.graphics.getWidth()/580) do
-			love.graphics.draw(cleaner.img, cleaner.x*i*580, cleaner.y, 0, 1, 1)
+		for i=0, math.ceil(love.graphics.getWidth()/580) do
+			love.graphics.draw(cleaner.img, (cleaner.x+i*580), cleaner.y, 0, 1, 1)
 		end
 	end
 
